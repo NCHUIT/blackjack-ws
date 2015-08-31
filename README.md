@@ -13,10 +13,11 @@
 ## 參考資料
 
 * [socket.io](http://socket.io/)
-* jQuery
-* node.js
+* [jQuery](https://jquery.com/)
+* [node.js](https://nodejs.org/)
 * database (mysql or redis)
 * [21點遊戲規則](https://zh.wikipedia.org/wiki/%E5%BB%BF%E4%B8%80%E9%BB%9E)
+* [hackpad 討論](https://nchuit.hackpad.com/blackjack-ws-Pnqo7KL9Hkx)
 
 ## 素材
 
