@@ -1,5 +1,53 @@
-extends ../layout
+extends layout_observer
 
 block content
-  h1 = title
-  p Welcome to #{title}
+	.container
+		h1(style={color: 'white',}) Black Jack
+		
+
+	.blackjack-board.row
+		.row
+			.col-md-10.col-md-offset-1
+				#outcome.alert.alert-info(role= 'alert') No message.
+				.col-xs-6
+					#player-1.panel.panel-success
+						.panel-heading
+							.panel-title
+							span.glyphicon.glyphicon-user
+							|  DU,JIE 
+							span.15dge 21
+						.panel-body
+							.poker.poker-back-heartstone
+							.poker.poker-back-heartstone
+							.poker.poker-back-heartstone
+							.poker.poker-back-heartstone
+							.poker.poker-back-heartstone
+				.col-xs-6
+					#player-2.panel.panel-success
+						.panel-heading
+							.panel-title
+							span.glyphicon.glyphicon-user
+							|  Jason 
+							span.badge 15
+						.panel-body
+							.poker.poker-back-heartstone
+		.row
+			.col-md-10.col-md-offset-1
+				.col-xs-6
+					#player-3.panel.panel-success
+						.panel-heading
+							.panel-title
+							span.glyphicon.glyphicon-user
+							|  Jocker 
+							span.badge 15
+						.panel-body
+							.poker.poker-back-heartstone
+				.col-xs-6
+					#player-4.panel.panel-success
+						.panel-heading
+							.panel-title
+							span.glyphicon.glyphicon-user
+							|  Sakamoto 
+							span.badge 15
+						.panel-body
+							.poker.poker-back-heartstone
