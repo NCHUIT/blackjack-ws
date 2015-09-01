@@ -1,4 +1,4 @@
-var models = function() {
+var Model = (function() {
 
   var SUITS = ["c", "s", "h", "d"];
   var RANKS = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k"];
@@ -92,4 +92,14 @@ var models = function() {
     for(var j, x, i = v.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
     return v;
   };
-}
+
+  return {
+    SUITS: SUITS,
+    RANKS: RANKS,
+    VALUES: VALUES,
+    Room: Room,
+    Card: Card,
+    Hand: Hand,
+    Deck: Deck,
+  };
+})();
