@@ -198,9 +198,9 @@ Person.prototype = {
 };
 Room.prototype.Person = Person;
 
-// module.exports = Room;
+module.exports = Room;
 
-r = new Room();
-p1 = r.addPlayer('1');
-p2 = r.addPlayer('2');
-r.start();
+// r = new Room();
+// p1 = r.addPlayer('1');
+// p2 = r.addPlayer('2');
+// r.start();
