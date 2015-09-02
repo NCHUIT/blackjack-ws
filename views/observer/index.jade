@@ -1,53 +1,21 @@
-extends layout_observer
+extends ../layout
+
+block append css
+	link(rel='stylesheet', href='/stylesheets/index.css')
 
 block content
 	.container
-		h1(style={color: 'white',}) Black Jack
 		
+		.row
+			.col-md-12.hidden-sm.hidden-xs
+				h1 Black Jack
+			.col-sm-12.hidden-lg.hidden-md.hidden-xs
+				h1 Black Jack
+			.col-xs-12.hidden-lg.hidden-md.hidden-sm
+				h1 Black Jack
+		.row
+			.btn.btn-warning.btn-lg.btn-block(type="button") CreatGame
+		#logo			
 
-	.blackjack-board.row
-		.row
-			.col-md-10.col-md-offset-1
-				#outcome.alert.alert-info(role= 'alert') No message.
-				.col-xs-6
-					#player-1.panel.panel-success
-						.panel-heading
-							.panel-title
-							span.glyphicon.glyphicon-user
-							|  DU,JIE 
-							span.15dge 21
-						.panel-body
-							.poker.poker-back-heartstone
-							.poker.poker-back-heartstone
-							.poker.poker-back-heartstone
-							.poker.poker-back-heartstone
-							.poker.poker-back-heartstone
-				.col-xs-6
-					#player-2.panel.panel-success
-						.panel-heading
-							.panel-title
-							span.glyphicon.glyphicon-user
-							|  Jason 
-							span.badge 15
-						.panel-body
-							.poker.poker-back-heartstone
-		.row
-			.col-md-10.col-md-offset-1
-				.col-xs-6
-					#player-3.panel.panel-success
-						.panel-heading
-							.panel-title
-							span.glyphicon.glyphicon-user
-							|  Jocker 
-							span.badge 15
-						.panel-body
-							.poker.poker-back-heartstone
-				.col-xs-6
-					#player-4.panel.panel-success
-						.panel-heading
-							.panel-title
-							span.glyphicon.glyphicon-user
-							|  Sakamoto 
-							span.badge 15
-						.panel-body
-							.poker.poker-back-heartstone
+block append end-js
+	script(src='/javascripts/socket.js')
