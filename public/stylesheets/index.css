@@ -1,0 +1,18 @@
+body {
+  padding: 250px 50px 50px 50px;
+}
+.col-md-12 h1{
+	text-align: center;
+	font-size: 1200%;
+}
+.col-sm-12 h1{
+	text-align: center;
+	font-size: 1000%;
+}
+.col-xs-12 h1{
+	text-align: center;
+	font-size: 750%;
+}
+.btn-warning{
+	font-size: 25px;
+}

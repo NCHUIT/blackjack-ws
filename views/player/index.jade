@@ -1,0 +1,18 @@
+extends ../layout
+
+block append css
+	link(rel='stylesheet', href='/stylesheets/player_index.css')
+
+block content
+	.container
+		.row
+			h1.white 請掃描QR code或是輸入代碼來加入遊戲
+			br
+			br
+			br
+			from
+				.form-group
+					input#gameCode.form-control(name="gameCode")
+				.form-group
+					button.btn.btn-warning.btn-lg.btn-block Submit
+		#logo

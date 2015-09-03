@@ -1,7 +1,24 @@
 extends layout
 
+block append css
+	link(rel='stylesheet', href='/stylesheets/index.css')
+
 block content
-  h1= title
-  p Welcome to #{title}
+	.container
+		
+		.row
+			.col-md-12.hidden-sm.hidden-xs
+				h1 Black Jack
+			.col-sm-12.hidden-lg.hidden-md.hidden-xs
+				h1 Black Jack
+			.col-xs-12.hidden-lg.hidden-md.hidden-sm
+				h1 Black Jack
+		.row
+			.btn.btn-warning.btn-lg.btn-block(type="button") CreatGame
+		.row
+			.col-md-offset-9.col-md-3.col-sm-offset-8.col-sm-4.col-xs-offset-7.col-xs-5
+				img(src="/img/logo.png").img-responsive
+			
+
 block append end-js
-  script(src='/javascripts/socket.js')
+	script(src='/javascripts/socket.js')
