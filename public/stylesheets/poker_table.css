@@ -1,5 +1,4 @@
-.poker 
-{
+.poker {
 	width: 71px;
 	height: 96px;
 	background-image: url("/img/cards.png");
@@ -9,15 +8,8 @@
 	margin-bottom: 15px;
 	border-radius: 2px;
 }
-.panel.panel-success .panel-body
-{
+.panel.panel-success .panel-body {
 	align: center;
-}
-.blackjack-board
-{
-	/*padding-bottom: 0;
-	padding-right: 5px;
-	min-height: 126px;*/
 }
 .poker-ca{background-position: -1px 0px; }	 /* 梅花 1 */
 .poker-c2{background-position: -73px 0px; }	/* 梅花 2 */
@@ -71,8 +63,7 @@
 .poker-dj{background-position: -721px -288px; } /* 方塊 11 */
 .poker-dq{background-position: -793px -288px; } /* 方塊 12 */
 .poker-dk{background-position: -865px -288px; } /* 方塊 13 */
-.poker-back-heartstone
-{
+.poker-back-heartstone {
 	background-image: url("/img/back.png");
 	background-size: 100% 100%;
 } /* 卡背 */

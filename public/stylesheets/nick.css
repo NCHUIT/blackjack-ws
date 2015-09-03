@@ -1,0 +1,10 @@
+body {
+  padding: 250px 50px 50px 50px;
+}
+#nick input{
+	font-size: 25px;
+    height: auto;
+}
+.btn {
+	font-size: 25px;
+}

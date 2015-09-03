@@ -1,19 +1,15 @@
 body {
-	padding: 100px 50px;
+	padding: 40px 50px 0px 50px;
 }
 .row h1{
 	text-align: center;
-	color: white;
 }
 .row h2{
 	text-align: center;
-	color: white;
 }
 .row .col-md-6 h2{
 	text-align: left;
-	color: white;
 }
 .row .col-md-6 h4{
 	text-align: left;
-	color: white;
 }

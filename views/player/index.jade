@@ -1,53 +1,18 @@
-extends layout
+extends ../layout
 
 block append css
-	link(rel='stylesheet', href='/stylesheets/player.css')
+	link(rel='stylesheet', href='/stylesheets/player_index.css')
 
 block content
 	.container
-		h1(style= {color: 'white',}) Black Jack
-		#outcome.alert.alert-info(role= 'alert') No message.
-
-		.blackjack-board.row
-			.row
-				.col-xs-6(style= {'padding-left': '30px',})
-					#player-1.panel.panel-success
-						.panel-heading
-							.panel-title
-							span.glyphicon.glyphicon-user
-							|  DU,JIE 
-							span.badge 16
-						.panel-body
-							.poker.poker-back-heartstone
-							.poker.poker-back-heartstone
-							.poker.poker-back-heartstone
-							.poker.poker-back-heartstone
-							.poker.poker-back-heartstone
-				.col-xs-6(style= {'padding-right': '30px',})
-					#player-2.panel.panel-success
-						.panel-heading
-							.panel-title
-							span.glyphicon.glyphicon-user
-							|  Jason 
-							span.badge 16
-						.panel-body
-							.poker.poker-back-heartstone
-			.row
-				.col-xs-6(style= {'padding-left': '30px',})
-					#player-3.panel.panel-success
-						.panel-heading
-							.panel-title
-							span.glyphicon.glyphicon-user
-							|  Jocker 
-							span.badge 16
-						.panel-body
-							.poker.poker-back-heartstone
-				.col-xs-6(style= {'padding-right': '30px',})
-					#player-4.panel.panel-success
-						.panel-heading
-							.panel-title
-							span.glyphicon.glyphicon-user
-							|  Sakamoto 
-							span.badge 16
-						.panel-body
-							.poker.poker-back-heartstone
+		.row
+			h1.white 請掃描QR code或是輸入代碼來加入遊戲
+			br
+			br
+			br
+			from
+				.form-group
+					input#gameCode.form-control(name="gameCode")
+				.form-group
+					button.btn.btn-warning.btn-lg.btn-block Submit
+		#logo

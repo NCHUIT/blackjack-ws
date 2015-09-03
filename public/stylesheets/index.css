@@ -3,17 +3,14 @@ body {
 }
 .col-md-12 h1{
 	text-align: center;
-	color: white;
 	font-size: 1200%;
 }
 .col-sm-12 h1{
 	text-align: center;
-	color: white;
 	font-size: 1000%;
 }
 .col-xs-12 h1{
 	text-align: center;
-	color: white;
 	font-size: 750%;
 }
 .btn-warning{
