@@ -5,20 +5,19 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mobileDetect = require('./mobiledetect');
+
 var routes = require('./routes/index');
 var roomRoutes = require('./routes/room');
 var qrRoutes = require('./routes/qr');
 var users = require('./routes/users');
 
-var Room = require('./models');
-var rooms = {};
-var people = {};
-
-roomRoutes.rooms = rooms;
-roomRoutes.people = people;
-
 var app = express();
 app.io = require('./ws/index');
+
+express.rooms = {};
+express.people = {};
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,8 +31,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// routes setup
+app.use('*', function(req, res, next) {
+  this.mobile = mobileDetect(req);
+  this.io = app.io;
+  next();
+});
 app.use('/', routes);
-app.use('/room', roomRoutes);
 app.use('/qr', qrRoutes);
 app.use('/users', users);
 

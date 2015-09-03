@@ -4,7 +4,7 @@ function Room() {
   this.SUITS = ["c", "s", "h", "d"];
   this.RANKS = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k"];
   this.VALUES = {a:1, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "t":10, "j":10, "q":10, "k":10};
-
+  this.id = 'nchuit';
   this.init();
 }
 
@@ -67,6 +67,15 @@ Room.prototype.draw = function() {
   for(i in this.observers)
     this.observers[i].drawObserver();
 }
+Room.prototype.shuffle= function(v) {
+  for(var j, x, i = v.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
+  return v;
+}
+
+Room.prototype.newId = function() {
+  this.id = this.shuffle(this.id.split('')).join('');
+  return this.id;
+}
 
 // Card
 function Card(room, suit, rank) {
@@ -102,12 +111,8 @@ Deck.prototype = {
     return "Deck contains " + this.cards.join(" ");
   },
   shuffle: function() {
-    this.cards = this._shuffle(this.cards);
+    this.cards = this.room.shuffle(this.cards);
     return this;
-  },
-  _shuffle: function(v) {
-    for(var j, x, i = v.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
-    return v;
   },
   dealCard: function() {
     return this.cards.pop();

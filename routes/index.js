@@ -1,31 +1,58 @@
 var express = require('express');
+var colors = require('colors');
 var router = express.Router();
-var qr = require('qr-image');
+var Room = require('../room');
 
-var mobileDetect = require('../mobiledetect');
-
-router.use(function(req, res, next) {
-    this.isMobile = true;
-    next();
-});
+// already define
+// express.rooms = {};
+// express.people = {};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if (this.isMobile) {
-    res.redirect('room/');
+  console.log('On router /'.blue);
+  if (this.mobile) {
+    // let player enter room id or scan qrcode
+    res.render('player/index', {title: 'Player/index'});
   }
-  res.render('index', { title: 'Express' });
+  else {
+    var r = new Room();
+    while (!(r.id in express.rooms))
+      r.newId();
+    express.rooms[r.id] = r;
+    res.render('observer/index', { title: 'Oberser/index' }); 
+  }
 });
 
-router.get('/test',function(req,res) { 
-    var code = qr.image('http://www.facebook.com', { type: 'svg'});
-    res.type('svg');
-    code.pipe(res);
-  //res.render('test', { title: 'Test Route'})
- });
+router.post('/', function(req, res, next) {
+  console.log('On router /'.blue);
+  if (this.mobile) {
+    var gameCode = req.param.gameCode;
+    if (express.rooms.indexOf(gameCode) != -1) {// if gameCode in rooms
+      res.redirect('/'+gameCode);
+    }
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  }
+  else {
+    // create game
+  }
+});
 
-router.get('/test2', function(req, res) { 
-    res.render('test');
+router.get('/:roomId/', function(req, res, next) {
+  console.log('On router /:roomId/'.blue); 
+  if (this.mobile) {
+    // mobile game
+  }
+  else {
+    // observer game
+  }
+});
+
+
+router.get('/test/test',function(req,res) {
+  console.log('On router /test/test/'.blue);  
+  res.render('test', {title: 'Test file'});
 });
 
 module.exports = router;
