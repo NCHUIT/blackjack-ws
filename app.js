@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var csrf = require('csurf');
+var helmet = require('helmet');
 
 var mobileDetect = require('./mobiledetect');
 
@@ -26,6 +28,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(csrf({cookie: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routes setup

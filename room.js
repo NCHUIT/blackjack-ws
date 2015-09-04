@@ -77,6 +77,14 @@ Room.prototype.newId = function() {
   return this.id;
 }
 
+Room.prototype.maxIdCnt = function() {
+  var cnt = 1;
+  for (var i = 0; i < this.id.length; i++) {
+    cnt *= i+1;
+  }
+  return cnt;
+};
+
 // Card
 function Card(room, suit, rank) {
   if( room.SUITS.indexOf(suit) == -1 || room.RANKS.indexOf(rank) == -1 )
@@ -84,6 +92,7 @@ function Card(room, suit, rank) {
   this.suit = suit;
   this.rank = rank;
 };
+
 Card.prototype = {
   toString: function() {
     return this.suit + this.rank;
