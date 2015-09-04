@@ -35,6 +35,17 @@ router.post('/', function(req, res, next) {
   else {
     // create game
     console.log('On post PC');
+    var pwd = req.body.password;
+    if ( pwd != 'bug') {
+      res.status(404);
+      res.render('error', {
+        message: 'wrong passowrd',
+        error : {
+          status : res.statusCode,
+          stack:  'wrong passowrd',
+        },
+      });
+    }
     var r = new Room();
     if (express.rooms.length >= r.maxIdCnt) {
       res.status(404);
@@ -46,16 +57,15 @@ router.post('/', function(req, res, next) {
     while (r.id in express.rooms)
       r.newId();
     express.rooms[r.id] = r;
-    console.log(express.rooms);
     res.redirect('/'+r.id);
   }
 });
 
 router.get('/:roomId/', function(req, res, next) {
   console.log('On router /:roomId/'.blue); 
-  var
-  /*
-  res.status(404);
+  var roomId = req.params.roomId;
+  if (!(roomId in express.rooms)) {
+    res.status(404);
     res.render('error', {
       message: 'Room not exist',
       error : {
@@ -63,7 +73,7 @@ router.get('/:roomId/', function(req, res, next) {
         stack:  'The ID of room you entered doen\'t exist try again!',
       },
     });
-  */
+  }
   if (this.mobile) {
     // mobile game
     res.render('player/nick');
