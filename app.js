@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var mobileDetect = require('./mobiledetect');
 
 var routes = require('./routes/index');
-var roomRoutes = require('./routes/room');
 var qrRoutes = require('./routes/qr');
 var users = require('./routes/users');
 
