@@ -2,7 +2,6 @@
 
 var express = require('express');
 
-
 function Room() {
   this.SUITS = ["c", "s", "h", "d"];
   this.RANKS = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k"];
@@ -40,50 +39,73 @@ Room.prototype.start = function() {
 };
 
 Room.prototype.outcome = function(msg, color) {
-  color = typeof(color) !== "undefined" ? color : 'info';
-  console.log(color, msg);
-  // var $outcome = $('#outcome');
-  // $outcome.css('visibility', (msg.length==0)?'hidden':'inherit') // 顯示或隱藏
-  //   .html(msg.length==0?'No message.':msg)
-  //   .removeClass('alert-success alert-info alert-warning alert-danger')
-  //   .addClass('alert-'+color);
+  express.io.emit('outcome', {
+    color: typeof(color) !== "undefined" ? color : 'info',
+    msg: msg,
+  });
 };
 
-Room.prototype.addPlayer = function(socketId) {
+Room.prototype.addPlayer = function(socket) {
   if(this.players.length >= 4)
     throw "[Room.addPlayer] exceed 4 players";
-  var player = new Person(socketId);
+  console.log(socket.id, 'join to players');
+  var player = new Person(socket);
   player.room = this;
-  this.players[socketId] = player;
-  this.pOrder.push(socketId);
+  this.players[socket.id] = player;
+  this.pOrder.push(socket.id);
   return player;
 }
 
-Room.prototype.removePlayer = function(socketId) {
-  delete this.players[socketId];
-  delete this.pOrder[this.pOrder.indexOf(socketId)];
+Room.prototype.removePlayer = function(socket) {
+  console.log(socket.id, 'remove from players');
+  delete this.players[socket.id];
+  delete this.pOrder[this.pOrder.indexOf(socket.id)];
 }
 
-Room.prototype.addObserver = function(socketId) {
-  var observer = new Person(socketId);
+Room.prototype.addObserver = function(socket) {
+  console.log(socket.id, 'join to observers');
+  var observer = new Person(socket);
   observer.room = this;
-  this.observers[socketId] = observer;
+  this.observers[socket.id] = observer;
   return observer;
 }
 
-Room.prototype.removeObserver = function(socketId) {
-  delete this.observers[socketId];
+Room.prototype.removeObserver = function(socket) {
+  console.log(socket.id, 'remove from observers');
+  delete this.observers[socket.id];
 }
 
 Room.prototype.draw = function() {
   for(var i in this.players) {
     this.players[i].drawPlayer();
   }
-  for(var i in this.observers){
-    this.observers[i].drawObserver();
+  this.drawObserver();
+};
+
+Room.prototype.drawObserver = function() {
+  var data = {
+    outcome: this.outcome,
+    players: [],
+  };
+  for (var pid in this.pOrder) {
+    pid = this.pOrder[pid];
+    var tmp = null;
+    if(pid != null) {
+      var player = this.players[pid];
+      var tmp = {
+        nick: player.nick,
+        cards: player.cards,
+        outcome: player.outcome,
+      }
+      tmp.cards[0] = 'xx';
+    }
+    data.players.push(tmp);
   }
-}
-Room.prototype.shuffle= function(v) {
+  for (var pid in this.observers)
+    this.observers[pid].socket.emit('drawObserver', data);
+};
+
+Room.prototype.shuffle = function(v) {
   for(var j, x, i = v.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
   return v;
 }
@@ -145,11 +167,11 @@ Deck.prototype = {
 };
 Room.prototype.Deck = Deck;
 
-function Person(socketId) {
-  this.nick = socketId;
+function Person(socket) {
+  this.nick = socket.id;
   this.room = null;
   this.cards = [];
-  this.socketId = socketId;
+  this.socket = socket;
 }
 Person.prototype = {
   hit: function() {
@@ -183,7 +205,10 @@ Person.prototype = {
     // this.room.draw();
   },
   outcome: function(msg, color) {
-    console.log(color, msg);
+    this.socket.emit('outcome', {
+      color: typeof(color) !== "undefined" ? color : 'info',
+      msg: msg,
+    });
   },
   toString: function() {
     return this.nick + " contains " + this.cards.join(" ");
@@ -209,41 +234,15 @@ Person.prototype = {
       return 21;
     return value;
   },
-  drawObserver: function() {
-    var io = express.io;
-    var data = {
-      outcome: this.outcome,
-      players: [],
-    };
-    for (var pid in this.room.pOrder) {
-      pid = this.room.pOrder[pid];
-      var player = this.room.players[pid];
-      var tmp = {
-        nick: player.nick,
-        cards: player.cards,
-        outcome: player.outcome,
-      }
-      tmp.cards[0] = 'xx';
-      data.players.push(tmp);
-    }
-    io.emit('drawObserver', data);
-  },
   drawPlayer: function(steal) {
-    var io = express.io;
     var data = {
       nick: this.nick,
       cards: this.cards,
       outcome: this.outcome,
     };
-    io.emit('drawPlayer', data);
-    console.log("[Person.drawValue] " + this.getValue(steal));
-    return this;
-    var cards = this.cards;
-    if(steal === true)
-      cards[0] = 'xx';
-    // for(var i in this.cards) {
-    // }
-    console.log('[Person.drawCards] ' + cards.join(" "));
+    for(var i in data.cards)
+      data.cards[i] = data.cards[i].toString();
+    this.socket.emit('drawPlayer', data);
     return this;
   },
 };
