@@ -1,7 +1,7 @@
 // https://987.tw/2014/03/08/export-this-node-jsmo-zu-de-jie-mian-she-ji-mo-shi/
 
 var express = require('express');
-var io = express.io;
+
 
 function Room() {
   this.SUITS = ["c", "s", "h", "d"];
@@ -13,8 +13,9 @@ function Room() {
 
 Room.prototype.init = function(){
   this.in_play = false;
-  this.players = [];
-  this.observers = [];
+  this.players = {};
+  this.pOrder = [];
+  this.observers = {};
   this.deck = null;
   this.CARD_BACK = "poker-back-heartstone";
 };
@@ -54,7 +55,13 @@ Room.prototype.addPlayer = function(socketId) {
   var player = new Person(socketId);
   player.room = this;
   this.players[socketId] = player;
+  this.pOrder.push(socketId);
   return player;
+}
+
+Room.prototype.removePlayer = function(socketId) {
+  delete this.players[socketId];
+  delete this.pOrder[this.pOrder.indexOf(socketId)];
 }
 
 Room.prototype.addObserver = function(socketId) {
@@ -64,11 +71,17 @@ Room.prototype.addObserver = function(socketId) {
   return observer;
 }
 
+Room.prototype.removeObserver = function(socketId) {
+  delete this.observers[socketId];
+}
+
 Room.prototype.draw = function() {
-  for(i in this.players)
+  for(var i in this.players) {
     this.players[i].drawPlayer();
-  for(i in this.observers)
+  }
+  for(var i in this.observers){
     this.observers[i].drawObserver();
+  }
 }
 Room.prototype.shuffle= function(v) {
   for(var j, x, i = v.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
@@ -197,10 +210,14 @@ Person.prototype = {
     return value;
   },
   drawObserver: function() {
+    var io = express.io;
     var data = {
       outcome: this.outcome,
+      players: [],
     };
-    for (var player in this.room.players) {
+    for (var pid in this.room.pOrder) {
+      pid = this.room.pOrder[pid];
+      var player = this.room.players[pid];
       var tmp = {
         nick: player.nick,
         cards: player.cards,
@@ -212,6 +229,7 @@ Person.prototype = {
     io.emit('drawObserver', data);
   },
   drawPlayer: function(steal) {
+    var io = express.io;
     var data = {
       nick: this.nick,
       cards: this.cards,
