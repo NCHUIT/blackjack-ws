@@ -5,7 +5,6 @@ $(function () {
 	query: $.param({
 	  room: location.pathname.match(/[nchuit]{6}/)[0],
 	}),
-	});
 
 	var RANKS = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k"];
 	var VALUES = {a:1, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "t":10, "j":10, "q":10, "k":10};
@@ -89,25 +88,25 @@ $(function () {
 			return this;
 	};
 
-	sockety.on('drawObserver', function(data){
+	socket.on('drawObserver', function(data){
 		view_hide();
 		$('#poker-table').show();
 		outcome(outcome.msg, outcome.color)
 		console.log('drawObserver', data);
 	});
 
-	sockety.on('drawPlayer', function(data){
+	socket.on('drawPlayer', function(data){
 		view_hide();
 		$('#poker-table').show();
 		outcome(outcome.msg, outcome.color)
 		console.log('drawPlayer', data);
 	});
 
-	sockety.on('outcome', function(data){
+	socket.on('outcome', function(data){
 		console.log('outcome', data);
 	});
 
-	sockety.on('hitOrStand', function(data){
+	socket.on('hitOrStand', function(data){
 		console.log('hitOrStand', data);
 	});
 
@@ -143,3 +142,5 @@ $(function () {
 		draw_value('#player .panel-title .badge');
 	}
 });
+
+	
