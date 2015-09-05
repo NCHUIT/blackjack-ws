@@ -88,7 +88,10 @@
 #poker-table .poker-dj{background-position: -721px -288px; } /* 方塊 11 */
 #poker-table .poker-dq{background-position: -793px -288px; } /* 方塊 12 */
 #poker-table .poker-dk{background-position: -865px -288px; } /* 方塊 13 */
-#poker-table .poker-back-heartstone {
+#poker-table .poker-back {
 	background-image: url("/img/back.png");
 	background-size: 100% 100%;
 } /* 卡背 */
+#poker-table .playerNick{
+	padding: 0 5px;
+}
