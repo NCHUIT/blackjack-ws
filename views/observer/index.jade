@@ -1,7 +1,7 @@
 extends ../layout
 
 block append css
-	link(rel='stylesheet', href='/stylesheets/index.css')
+	link(rel='stylesheet', href='/stylesheets/observer_index.css')
 
 block content
 	.container
@@ -15,7 +15,8 @@ block content
 				h1.white Black Jack
 		.row
 			form(action='',method='post')
+				button.btn.btn-warning.btn-lg.btn-block(type="submit") CreatGame
+				br
 				input(type='hidden' name="_csrf" value="#{csrfToken}")
 				input(type='password' name='password')
-				button.btn.btn-warning.btn-lg.btn-block(type="submit") CreatGame
 		#logo
