@@ -1,7 +1,7 @@
 body {
-	padding: 50px;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-	background: url("/img/poker-table.JPG") no-repeat center center fixed;
+	/*background-color: #10823C;*/
+	background: url("/img/poker-table.jpg") no-repeat center center fixed;
 	background-size: 100% 100%;
 }
 a {
@@ -20,4 +20,4 @@ a {
 }
 .white {
 	color: white;
-}
+} 

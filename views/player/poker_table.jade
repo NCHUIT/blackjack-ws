@@ -1,7 +1,7 @@
 //- block append css
 //- 	link(rel='stylesheet', href='/stylesheets/player.css')
 
-body#poker-table
+#poker-table
 	.container
 		h1.white(style= {color: 'white',}) Black Jack
 		#outcome.alert.alert-info(role= 'alert') No message.
@@ -19,4 +19,9 @@ body#poker-table
 					.poker.poker-back-heartstone
 					.poker.poker-back-heartstone
 					.poker.poker-back-heartstone
-	#logo
+			.row
+				.col-xs-6
+					button.btn.btn-info.btn-lg.btn-block Hit
+				.col-xs-6
+					button.btn.btn-warning.btn-lg.btn-block Stand
+        #logo
