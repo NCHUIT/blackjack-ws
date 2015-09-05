@@ -46,10 +46,10 @@ Room.prototype.outcome = function(msg, color) {
 };
 
 Room.prototype.addPlayer = function(obj) {
-  if(this.players.length >= 4)
-    throw "[Room.addPlayer] exceed 4 players";
   var player = obj instanceof Person ? obj : new Person(socket);
   var socketId = player.socket.id;
+  if(this.pOrder.length >= 4)
+    throw "[Room.addPlayer] exceed 4 players";
   console.log(socketId, 'join at room ID= "',this.id, '" as players');
   player.room = this;
   this.players[socketId] = player;
