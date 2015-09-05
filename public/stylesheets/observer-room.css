@@ -1,0 +1,94 @@
+#roomId {
+	padding: 40px 50px 0px 50px;
+}
+#roomId .row h1{
+	text-align: center;
+}
+#roomId .row h2{
+	text-align: center;
+}
+#roomId .row .col-md-6 h2{
+	text-align: left;
+}
+#roomId .row .col-md-6 h4{
+	text-align: left;
+}
+#result {
+  padding: 250px 50px 50px 50px;
+}
+#result h1 {
+	font-size: 500%;
+	text-align: center;
+}
+#result .btn {
+	font-size: 25px;
+}
+#poker-table .poker {
+	width: 71px;
+	height: 96px;
+	background-image: url("/img/cards.png");
+	background-clip: border-box;
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 15px;
+	border-radius: 2px;
+}
+#poker-table .panel.panel-success .panel-body {
+	align: center;
+}
+#poker-table .poker-ca{background-position: -1px 0px; }	 /* 梅花 1 */
+#poker-table .poker-c2{background-position: -73px 0px; }	/* 梅花 2 */
+#poker-table .poker-c3{background-position: -145px 0px; } /* 梅花 3 */
+#poker-table .poker-c4{background-position: -217px 0px; } /* 梅花 4 */
+#poker-table .poker-c5{background-position: -289px 0px; } /* 梅花 5 */
+#poker-table .poker-c6{background-position: -361px 0px; } /* 梅花 6 */
+#poker-table .poker-c7{background-position: -433px 0px; } /* 梅花 7 */
+#poker-table .poker-c8{background-position: -505px 0px; } /* 梅花 8 */
+#poker-table .poker-c9{background-position: -577px 0px; } /* 梅花 9 */
+#poker-table .poker-ct{background-position: -649px 0px; } /* 梅花 10 */
+#poker-table .poker-cj{background-position: -721px 0px; } /* 梅花 11 */
+#poker-table .poker-cq{background-position: -793px 0px; } /* 梅花 12 */
+#poker-table .poker-ck{background-position: -865px 0px; } /* 梅花 13 */
+#poker-table .poker-sa{background-position: -1px -96px; }	 /* 黑桃 1 */
+#poker-table .poker-s2{background-position: -73px -96px; }	/* 黑桃 2 */
+#poker-table .poker-s3{background-position: -145px -96px; } /* 黑桃 3 */
+#poker-table .poker-s4{background-position: -217px -96px; } /* 黑桃 4 */
+#poker-table .poker-s5{background-position: -289px -96px; } /* 黑桃 5 */
+#poker-table .poker-s6{background-position: -361px -96px; } /* 黑桃 6 */
+#poker-table .poker-s7{background-position: -433px -96px; } /* 黑桃 7 */
+#poker-table .poker-s8{background-position: -505px -96px; } /* 黑桃 8 */
+#poker-table .poker-s9{background-position: -577px -96px; } /* 黑桃 9 */
+#poker-table .poker-st{background-position: -649px -96px; } /* 黑桃 10 */
+#poker-table .poker-sj{background-position: -721px -96px; } /* 黑桃 11 */
+#poker-table .poker-sq{background-position: -793px -96px; } /* 黑桃 12 */
+#poker-table .poker-sk{background-position: -865px -96px; } /* 黑桃 13 */
+#poker-table .poker-ha{background-position: -1px -192px; }	 /* 紅心 1 */
+#poker-table .poker-h2{background-position: -73px -192px; }	/* 紅心 2 */
+#poker-table .poker-h3{background-position: -145px -192px; } /* 紅心 3 */
+#poker-table .poker-h4{background-position: -217px -192px; } /* 紅心 4 */
+#poker-table .poker-h5{background-position: -289px -192px; } /* 紅心 5 */
+#poker-table .poker-h6{background-position: -361px -192px; } /* 紅心 6 */
+#poker-table .poker-h7{background-position: -433px -192px; } /* 紅心 7 */
+#poker-table .poker-h8{background-position: -505px -192px; } /* 紅心 8 */
+#poker-table .poker-h9{background-position: -577px -192px; } /* 紅心 9 */
+#poker-table .poker-ht{background-position: -649px -192px; } /* 紅心 10 */
+#poker-table .poker-hj{background-position: -721px -192px; } /* 紅心 11 */
+#poker-table .poker-hq{background-position: -793px -192px; } /* 紅心 12 */
+#poker-table .poker-hk{background-position: -865px -192px; } /* 紅心 13 */
+#poker-table .poker-da{background-position: -1px -288px; }	 /* 方塊 1 */
+#poker-table .poker-d2{background-position: -73px -288px; }	/* 方塊 2 */
+#poker-table .poker-d3{background-position: -145px -288px; } /* 方塊 3 */
+#poker-table .poker-d4{background-position: -217px -288px; } /* 方塊 4 */
+#poker-table .poker-d5{background-position: -289px -288px; } /* 方塊 5 */
+#poker-table .poker-d6{background-position: -361px -288px; } /* 方塊 6 */
+#poker-table .poker-d7{background-position: -433px -288px; } /* 方塊 7 */
+#poker-table .poker-d8{background-position: -505px -288px; } /* 方塊 8 */
+#poker-table .poker-d9{background-position: -577px -288px; } /* 方塊 9 */
+#poker-table .poker-dt{background-position: -649px -288px; } /* 方塊 10 */
+#poker-table .poker-dj{background-position: -721px -288px; } /* 方塊 11 */
+#poker-table .poker-dq{background-position: -793px -288px; } /* 方塊 12 */
+#poker-table .poker-dk{background-position: -865px -288px; } /* 方塊 13 */
+#poker-table .poker-back-heartstone {
+	background-image: url("/img/back.png");
+	background-size: 100% 100%;
+} /* 卡背 */

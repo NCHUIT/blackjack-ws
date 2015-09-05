@@ -76,11 +76,11 @@ router.get('/:roomId/', function(req, res, next) {
   }
   if (this.mobile) {
     // mobile game
-    res.render('player/nick');
+    res.render('player/room');
   }
   else {
     // observer game
-    res.render('observer/roomId');
+    res.render('observer/room');
   }
 });
 
@@ -90,25 +90,25 @@ router.get('/:roomId/', function(req, res, next) {
  *
  */
 
- router.get('/:roomId/pokertable', function(req, res, next) {
-  console.log('On router /:roomId/pokertable/'.blue); 
-  if (this.mobile) {
-    res.render('player/room');
-  }
-  else {
-    res.render('observer/poker_table');
-  }
- });
+// router.get('/:roomId/pokertable', function(req, res, next) {
+//  console.log('On router /:roomId/pokertable/'.blue); 
+//  if (this.mobile) {
+//    res.render('player/room');
+//  }
+//  else {
+//    res.render('observer/poker_table');
+//  }
+// });
 
- router.get('/:roomId/result', function(req, res, next) {
-  console.log('On router /:roomId/result/'.blue);
-  if (this.mobile) {
-    res.render('player/result');
-  }
-  else {
-    res.render('observer/result');
-  }
- });
+// router.get('/:roomId/result', function(req, res, next) {
+//  console.log('On router /:roomId/result/'.blue);
+//  if (this.mobile) {
+//    res.render('player/result');
+//  }
+//  else {
+//    res.render('observer/result');
+//  }
+// });
 
 router.get('/test/test',function(req,res) {
   console.log('On router /test/test/'.blue);  
