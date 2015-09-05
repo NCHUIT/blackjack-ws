@@ -19,10 +19,7 @@ io.on('connection', function(socket) {
   }
 
   socket.on('gameJoin', function(data) {
-    console.log('On gameJoin');
-    room.addPlayer('GOODMORNING');
-    room.addPlayer('GOODAFTERNOON');
-    room.addPlayer('GOODNIGHT');   
+    room.addPlayer(socket.id);
   });
 
   socket.on('gameStart', function(data) {
