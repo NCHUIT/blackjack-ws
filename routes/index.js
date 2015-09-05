@@ -36,7 +36,7 @@ router.post('/', function(req, res, next) {
     // create game
     console.log('On post PC');
     var pwd = req.body.password;
-    if ( pwd != 'bug') {
+    if ( pwd != 'bugfree') {
       res.status(404);
       res.render('error', {
         message: 'wrong passowrd',

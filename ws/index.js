@@ -5,36 +5,41 @@ var Room = require('../room');
 
 // already define
 // express.rooms = {};
-// express.people = {};
 
 io.on('connection', function(socket) {
-  var roomId = socket.handshake.query.room;
-  var rooms = express.rooms;
-  var people = express.people;
-  var room = rooms[roomId];
-  if ( roomId in rooms) {
-    var person = room.addObserver(socket.id);
-    people[socket.id] = person;
-    console.log(socket.id + ' connected as observer'); 
+  try{
+    console.log(socket.id + ' connected');
+    var roomId = socket.handshake.query.room;
+    var rooms = express.rooms;
+    if( !roomId in rooms )
+      throw "room not exists";
+    var room = rooms[roomId];
+    var person = room.addObserver(socket);
+  } catch (e) {
+    socket.emit('outcome', {
+      color: 'danger',
+      msg: e.toString(),
+    });
   }
 
   socket.on('gameJoin', function(data) {
-    room.addPlayer(socket.id);
+    console.log(socket.id, 'join room ID="', room.id, '"');
+    room.removeObserver(socket);
+    person.nick = data.nick || person.nick;
+    room.addPlayer(person);
   });
 
   socket.on('gameStart', function(data) {
-    console.log('On gameStart');
-    people[socket.id].room.start();
-  })
-
-  socket.on('chat message', function(msg) {
-    console.log(msg);
+    console.log(socket.id, 'start game', room.id);
+    room.start();
   });
+
   socket.on('disconnect', function() {
-    room.removePlayer(socket.id);
-    room.removeObserver(socket.id);
-    delete people[socket.id];
     console.log(socket.id + ' disconnected');
+    if(room == null)
+      return;
+    room.removePlayer(socket);
+    room.removeObserver(socket);
   });
 });
 
