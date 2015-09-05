@@ -1,5 +1,8 @@
 // https://987.tw/2014/03/08/export-this-node-jsmo-zu-de-jie-mian-she-ji-mo-shi/
 
+var express = require('express');
+var io = express.io;
+
 function Room() {
   this.SUITS = ["c", "s", "h", "d"];
   this.RANKS = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k"];
@@ -63,7 +66,7 @@ Room.prototype.addObserver = function(socketId) {
 
 Room.prototype.draw = function() {
   for(i in this.players)
-    this.players[i].drawCards().drawValue();
+    this.players[i].drawPlayer();
   for(i in this.observers)
     this.observers[i].drawObserver();
 }
@@ -194,13 +197,29 @@ Person.prototype = {
     return value;
   },
   drawObserver: function() {
-
+    var data = {
+      outcome: this.outcome,
+    };
+    for (var player in this.room.players) {
+      var tmp = {
+        nick: player.nick,
+        cards: player.cards,
+        outcome: player.outcome,
+      }
+      tmp.cards[0] = 'xx';
+      data.players.push(tmp);
+    }
+    io.emit('drawObserver', data);
   },
-  drawValue: function(steal) {
+  drawPlayer: function(steal) {
+    var data = {
+      nick: this.nick,
+      cards: this.cards,
+      outcome: this.outcome,
+    };
+    io.emit('drawPlayer', data);
     console.log("[Person.drawValue] " + this.getValue(steal));
     return this;
-  },
-  drawCards: function(steal) {
     var cards = this.cards;
     if(steal === true)
       cards[0] = 'xx';

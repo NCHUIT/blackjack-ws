@@ -4,8 +4,10 @@ block append js
 block append css
 	link(rel='stlesheet', href='/stylesheets/observer-room.css')
 
-
 block content
 	include ./roomId.jade
 	include ./poker_table.jade
 	include ./result.jade
+
+block append end-js
+	script(src='/javascripts/socket.js')

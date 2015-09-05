@@ -14,8 +14,8 @@ var qrRoutes = require('./routes/qr');
 var users = require('./routes/users');
 
 var app = express();
-app.io = require('./ws/index');
-
+require('./ws/index');
+express.Room = require('./room');
 express.rooms = {};
 express.people = {};
 

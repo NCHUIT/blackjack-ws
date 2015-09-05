@@ -1,4 +1,5 @@
 var express = require('express');
+
 var io = require('socket.io')();
 var Room = require('../room');
 
@@ -7,6 +8,8 @@ var Room = require('../room');
 // express.people = {};
 
 io.on('connection', function(socket) {
+  var roomId = null;
+  console.log("Query: ", socket.handshake.query);
     console.log('On all');
     console.log('a user connected');
     socket.on('chat message', function(msg) {
@@ -17,4 +20,4 @@ io.on('connection', function(socket) {
     });
 });
 
-module.exports = io;
+express.io = io;

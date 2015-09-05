@@ -84,32 +84,6 @@ router.get('/:roomId/', function(req, res, next) {
   }
 });
 
-/***
- * Router under this is for testing 
- * It will be merge to /:roomId
- *
- */
-
-// router.get('/:roomId/pokertable', function(req, res, next) {
-//  console.log('On router /:roomId/pokertable/'.blue); 
-//  if (this.mobile) {
-//    res.render('player/room');
-//  }
-//  else {
-//    res.render('observer/poker_table');
-//  }
-// });
-
-// router.get('/:roomId/result', function(req, res, next) {
-//  console.log('On router /:roomId/result/'.blue);
-//  if (this.mobile) {
-//    res.render('player/result');
-//  }
-//  else {
-//    res.render('observer/result');
-//  }
-// });
-
 router.get('/test/test',function(req,res) {
   console.log('On router /test/test/'.blue);  
   res.render('test', {title: 'Test file'});
