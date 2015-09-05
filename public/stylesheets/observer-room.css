@@ -1,6 +1,8 @@
 #roomId {
+	/*display: none;*/
 	padding: 60px 50px 0px 50px;
 }
+
 #roomId .row .col-md-6 h2{
 	text-align: left;
 }
@@ -8,7 +10,8 @@
 	text-align: left;
 }
 #result {
-  padding: 250px 50px 50px 50px;
+	display: none;
+	padding: 250px 50px 50px 50px;
 }
 #result h1 {
 	font-size: 500%;
@@ -16,6 +19,9 @@
 }
 #result .btn {
 	font-size: 25px;
+}
+#poker-table {
+	display: none;
 }
 #poker-table .poker {
 	width: 71px;
