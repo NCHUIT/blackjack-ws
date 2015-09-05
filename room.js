@@ -97,7 +97,6 @@ Room.prototype.drawObserver = function() {
     var tmp = null;
     if(pid != null) {
       var player = this.players[pid];
-      console.log('[room.js Line:100]player is ',player);
       var tmp = {
         nick: player.nick,
         cards: player.cards,
