@@ -35,6 +35,10 @@ io.on('connection', function(socket) {
     room.start();
   });
 
+  socket.on('test', function(onEvent) {
+    socket.emit(onEvent.event, onEvent.data);
+  })
+
   socket.on('disconnect', function() {
     console.log(socket.id + ' disconnected');
     if(room == null)

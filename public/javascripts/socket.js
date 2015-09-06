@@ -112,6 +112,9 @@ $(function () {
 		 * ]
 		 */
 		console.log('outcome', data);
+		view_hide();
+		$('#playerList-' + data.pOlder).text(data.pOlder + '. ' + data.nick);
+		$('#roomId').show();
 	});
 
 	socket.on('hitOrStand', function(data){
@@ -126,6 +129,13 @@ $(function () {
 		console.log('drawStartBtn', data);
 	});
 
+
+	//First Player Only
+	socket.on('drawStartBtn', function(data) {
+	    console.log('drawStartBtn', data);
+	    $('#btn-submit').hide();
+	    $('#btn-start').show();
+	});
 
 	function view_hide(){
 		$('#roomId').hide();
@@ -155,11 +165,14 @@ $(function () {
 			.draw_value($target.find('.panel-title .badge'));
 	}
 
-  $('#nick').submit(function() {
+  $('#btn-submit').click(function() {
     var nick = $('#nick input').val();
     socket.emit('gameJoin', {nick:nick});
     $('form input').prop( "disabled", true );
-    $('#btn-start').attr('disabled','disabled');
-    return false;
+    $('#btn-submit').attr('disabled','disabled');
   })
+  $('#btn-start').click(function() {
+    socket.emit('gameJoin', {nick:nick});
+  })
+
 });
