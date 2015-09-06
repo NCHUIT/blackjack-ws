@@ -13,4 +13,5 @@ html
     block end-js
         script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
         script(src='/socket.io/socket.io.js')
-        
+        script
+            $("#qr-code").attr("src","/qr/" + location.pathname);
