@@ -124,12 +124,6 @@ $(function () {
 	socket.on('drawWait', function(data){
 		console.log('drawWait', data);
 	});
-	// only sent for observer
-	socket.on('drawStartBtn', function(data) {
-		console.log('drawStartBtn', data);
-	});
-
-
 	//First Player Only
 	socket.on('drawStartBtn', function(data) {
 	    console.log('drawStartBtn', data);
