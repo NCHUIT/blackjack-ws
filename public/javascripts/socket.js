@@ -177,11 +177,13 @@ $(function () {
   var name=['Jason', 'Lego', 'PastLeo', 'Sakamoto', 'Jimmy', 'ray', 'Joker', 'Ely', 'Momo'];
   $('#nick input').val(name[Math.floor(Math.random()*(8-0+1)+0)]);
 
-  $('').click(function(){
+  $('#poker-hit').click(function(){
   	socket.emit('hit');
+  	console.log('hit');
   });
 
-  $('').click(function(){
+  $('#poker-stand').click(function(){
   	socket.emit('stand');
+  	console.log('stand');
   });
 });
