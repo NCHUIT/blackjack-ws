@@ -112,6 +112,13 @@ $(function () {
 		console.log('hitOrStand', data);
 	});
 
+	//First Player Only
+	socket.on('drawStartBtn', function(data) {
+	    console.log('drawStartBtn', data);
+	    $('#btn-submit').hide();
+	    $('#btn-start').show();
+	});
+
 	function view_hide(){
 		$('#roomId').hide();
 		$('#poker-table').hide();
@@ -140,11 +147,14 @@ $(function () {
 			.draw_value($target.find('.panel-title .badge'));
 	}
 
-  $('#nick').submit(function() {
+  $('#btn-submit').click(function() {
     var nick = $('#nick input').val();
     socket.emit('gameJoin', {nick:nick});
     $('form input').prop( "disabled", true );
-    $('#btn-start').attr('disabled','disabled');
-    return false;
+    $('#btn-submit').attr('disabled','disabled');
   })
+  $('#btn-start').click(function() {
+    socket.emit('gameJoin', {nick:nick});
+  })
+
 });

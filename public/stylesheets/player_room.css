@@ -91,3 +91,6 @@
 #player-nick .btn {
 	font-size: 25px;
 }
+#btn-start {
+	display: none;
+}
