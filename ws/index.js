@@ -27,6 +27,7 @@ io.on('connection', function(socket) {
     room.removeObserver(socket);
     person.nick = data.nick || person.nick;
     room.addPlayer(person);
+    room.drawWait();
   });
 
   socket.on('gameStart', function(data) {

@@ -46,25 +46,37 @@ Room.prototype.outcome = function(msg, color) {
 };
 
 Room.prototype.addPlayer = function(obj) {
+  if(this.players.length >= 4)
+    throw "[Room.addPlayer] exceed 4 players";
   var player = obj instanceof Person ? obj : new Person(socket);
   var socketId = player.socket.id;
-  if(this.pOrder.length >= 4)
-    throw "[Room.addPlayer] exceed 4 players";
   console.log(socketId, 'join at room ID= "',this.id, '" as players');
   player.room = this;
   this.players[socketId] = player;
   this.pOrder.push(socketId); 
   this.outcome(player.nick + ' join to room');
+  if (this.pOrder.indexOf(socketId) == 0) {
+    player.drawStartBtn();
+  }
   return player;
 }
 
 Room.prototype.removePlayer = function(socket) {
   console.log(socket.id, 'remove at room ID= "',this.id, '" as players');
+  /*
   var tmp = []; 
   tmp[0] += delete this.players[socket.id];
   tmp[1] += delete this.pOrder[this.pOrder.indexOf(socket.id)];
-  if ( tmp[0] && tmp[1])
+  */
+  delete this.players[socket.id];
+  var index = this.pOrder.indexOf(socket.id);
+  if (index != -1) {
+    this.pOrder.splice(index,1);
     this.outcome(socket.id, 'remove as players');
+  }
+  var firstPlayer = this.players[this.pOrder[0]];
+  if (firstPlayer !== 'undefined')
+    firstPlayer.drawStartBtn();
 }
 
 Room.prototype.addObserver = function(socket) {
@@ -126,6 +138,20 @@ Room.prototype.maxIdCnt = function() {
     cnt *= i+1;
   }
   return cnt;
+};
+
+Room.prototype.drawWait = function() {
+  var data = [];
+  for (var i in this.pOrder) {
+    var tmp  = {
+      pOrder: i+1,
+      nick: this.players[this.pOrder[i]].nick,
+    };
+    data.push(tmp);
+  }
+  for (var pid in this.observers) {
+    this.observers[pid].socket.emit('drawWait', data);
+  }
 };
 
 // Card
@@ -249,6 +275,10 @@ Person.prototype = {
       data.cards[i] = data.cards[i].toString();
     this.socket.emit('drawPlayer', data);
     return this;
+  },
+  drawStartBtn: function() {
+    var data = 'Let\'s start game';
+    this.socket.emit('drawStartBtn', data);
   },
 };
 Room.prototype.Person = Person;

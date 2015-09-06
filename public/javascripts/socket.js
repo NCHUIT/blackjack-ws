@@ -102,12 +102,30 @@ $(function () {
 	});
 
 	socket.on('outcome', function(data){
+		/* data = [
+		 * {
+		 *  pOrder:
+		 *  nick:
+		 *  msg:
+		 *  status:
+		 * }
+		 * ]
+		 */
 		console.log('outcome', data);
 	});
 
 	socket.on('hitOrStand', function(data){
 		console.log('hitOrStand', data);
 	});
+	// only sent for observer
+	socket.on('drawWait', function(data){
+		console.log('drawWait', data);
+	});
+	// only sent for observer
+	socket.on('drawStartBtn', function(data) {
+		console.log('drawStartBtn', data);
+	});
+
 
 	function view_hide(){
 		$('#roomId').hide();
