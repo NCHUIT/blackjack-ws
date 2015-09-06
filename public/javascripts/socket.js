@@ -103,6 +103,9 @@ $(function () {
 
 	socket.on('outcome', function(data){
 		console.log('outcome', data);
+		view_hide();
+		$('#playerList-' + data.pOlder).text(data.pOlder + '. ' + data.nick);
+		$('#roomId').show();
 	});
 
 	socket.on('hitOrStand', function(data){
