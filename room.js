@@ -160,8 +160,26 @@ Room.prototype.askHitOrStand = function() {
     // some players need to ask hit or stand
     this.outcome('現在輪到 <strong>' + this.nextPlayer.nick + '</strong> 決定要不要抽牌。');
     this.nextPlayer.askHitOrStand();
-  } else {
-    // all players stand
+  } else this.end();
+};
+
+Room.prototype.end = function() {
+  this.in_play = false;
+  var winner = [], highValue = 0;
+  for( var player in this.players ) {
+    player = this.players[player];
+    playerValue = player.getValue();
+    if(playerValue > highValue) {
+      winner = [player.socket.id];
+      highValue = playerValue;
+    } else if (playerValue == highValue) {
+      winner.push(player.socket.id);
+    }
+  }
+  for(var player in this.players) {
+    if(player.id in winner)
+      player.drawWin();
+    else player.drawLose();
   }
 };
 
@@ -281,6 +299,12 @@ Person.prototype = {
     var data = 'Let\'s start game';
     this.socket.emit('drawStartBtn', data);
   },
+  drawWin: function() {
+    this.socket.emit('win');
+  },
+  drawLose: function() {
+    this.socket.emit('lose');
+  }
 };
 Room.prototype.Person = Person;
 

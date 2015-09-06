@@ -107,9 +107,6 @@ $(function () {
 		outcome(data);
 	});
 
-	socket.on('hitOrStand', function(data){
-		console.log('hitOrStand', data);
-	});
 	// only sent for observer
 	socket.on('drawWait', function(data){ //<-outcome
 		console.log('drawWait', data);
@@ -130,6 +127,15 @@ $(function () {
 
 	socket.on('askHitOrStand', function(){
 		// ask player hit or stand
+		console.log('askHitOrStand');
+	});
+
+	socket.on('win', function() {
+		console.log('win');
+	});
+
+	socket.on('lose', function() {
+		console.log('lose');
 	});
 
 	function view_hide(){
