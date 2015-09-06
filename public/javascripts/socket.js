@@ -103,13 +103,9 @@ $(function () {
 
 	socket.on('outcome', function(data){
 		console.log('outcome', data);
-		// $('#playerList-' + data.pOlder).text(data.pOlder + '. ' + data.nick);
 		outcome(data);
 	});
 
-	socket.on('hitOrStand', function(data){
-		console.log('hitOrStand', data);
-	});
 	// only sent for observer
 	socket.on('drawWait', function(data){ //<-outcome
 		console.log('drawWait', data);
@@ -117,7 +113,6 @@ $(function () {
 
 		$.each(data, function(i, nick){
 			$('#playerList-' + (i+1)).text((i+1) + '. ' + data[i].nick);
-			console.log('#playerList-' + (i+1),(i+1) + '. ' + data[i].nick);
 		});
 		$('#roomId').show();
 	});
@@ -130,6 +125,15 @@ $(function () {
 
 	socket.on('askHitOrStand', function(){
 		// ask player hit or stand
+		console.log('askHitOrStand');
+	});
+
+	socket.on('win', function() {
+		console.log('win');
+	});
+
+	socket.on('lose', function() {
+		console.log('lose');
 	});
 
 	function view_hide(){
@@ -162,7 +166,7 @@ $(function () {
 
   $('#btn-submit').click(function() {
     var nick = $('#nick input').val();
-    socket.emit('gameJoin', {nick:nick});
+    socket.emit('joinPlayer', {nick:nick});
     $('form input').prop( "disabled", true );
     $('#btn-submit').attr('disabled','disabled');
     return false;
