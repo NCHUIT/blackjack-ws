@@ -128,6 +128,10 @@ $(function () {
 	    $('#btn-start').show();
 	});
 
+	socket.on('askHitOrStand', function(){
+		// ask player hit or stand
+	});
+
 	function view_hide(){
 		$('#roomId').hide();
 		$('#poker-table').hide();
@@ -172,4 +176,12 @@ $(function () {
   });
   var name=['Jason', 'Lego', 'PastLeo', 'Sakamoto', 'Jimmy', 'ray', 'Joker', 'Ely', 'Momo'];
   $('#nick input').val(name[Math.floor(Math.random()*(8-0+1)+0)]);
+
+  $('').click(function(){
+  	socket.emit('hit');
+  });
+
+  $('').click(function(){
+  	socket.emit('stand');
+  });
 });
