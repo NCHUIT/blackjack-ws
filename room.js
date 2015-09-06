@@ -75,7 +75,7 @@ Room.prototype.removePlayer = function(socket) {
     this.outcome(socket.id, 'remove as players');
   }
   var firstPlayer = this.players[this.pOrder[0]];
-  if (firstPlayer !== 'undefined')
+  if (firstPlayer)
     firstPlayer.drawStartBtn();
 }
 

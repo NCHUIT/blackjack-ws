@@ -103,26 +103,38 @@ $(function () {
 
 	socket.on('outcome', function(data){
 		/* data = [
+
 		 * {
-		 *  pOrder:
-		 *  nick:
+		 *  pOrder: 1
+		 *  nick: kkk
+		 *  msg:
+		 *  status:
+		 * },
+		 {
+		 *  pOrder: 2
+		 *  nick: lll
 		 *  msg:
 		 *  status:
 		 * }
 		 * ]
 		 */
 		console.log('outcome', data);
-		view_hide();
 		$('#playerList-' + data.pOlder).text(data.pOlder + '. ' + data.nick);
-		$('#roomId').show();
 	});
 
 	socket.on('hitOrStand', function(data){
 		console.log('hitOrStand', data);
 	});
 	// only sent for observer
-	socket.on('drawWait', function(data){
+	socket.on('drawWait', function(data){ //<-outcome
 		console.log('drawWait', data);
+		view_hide();
+
+		$.each(data, function(i, nick){
+			$('#playerList-' + (i+1)).text((i+1) + '. ' + data[i].nick);
+			console.log('#playerList-' + (i+1),(i+1) + '. ' + data[i].nick);
+		});
+		$('#roomId').show();
 	});
 	//First Player Only
 	socket.on('drawStartBtn', function(data) {
@@ -164,9 +176,15 @@ $(function () {
     socket.emit('gameJoin', {nick:nick});
     $('form input').prop( "disabled", true );
     $('#btn-submit').attr('disabled','disabled');
+    return false;
   })
   $('#btn-start').click(function() {
-    socket.emit('gameJoin', {nick:nick});
+    socket.emit('gameStart', {nick:nick});
+    return false;
   })
-
+  $('#nick input').click(function() {
+  	$('#nick input').val("");
+  });
+  var name=['Jason', 'Lego', 'PastLeo', 'Sakamoto', 'Jimmy', 'ray', 'Joker', 'Ely', 'Momo'];
+  $('#nick input').val(name[Math.floor(Math.random()*(8-0+1)+0)]);
 });
