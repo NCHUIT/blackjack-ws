@@ -35,6 +35,16 @@ io.on('connection', function(socket) {
     room.start();
   });
 
+  socket.on('hit', function(data){
+    console.log(socket.id, 'hit');
+    person.hit();
+  });
+
+  socket.on('stand', function(data){
+    console.log(socket.id, 'stand');
+    person.stand();
+  });
+
   socket.on('test', function(onEvent) {
     socket.emit(onEvent.event, onEvent.data);
   })

@@ -12,13 +12,13 @@ var Room = require('../room');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log('On router /'.blue);
-  if (this.mobile) { 
+  if (this.mobile) {
     // let player enter room id or scan qrcode
-    res.render('player/index'); 
+    res.render('player/index');
   }
   else {
-    res.render('observer/index', 
-      { 
+    res.render('observer/index',
+      {
         title: 'Observer',
         csrfToken: req.csrfToken(),
       });
@@ -62,7 +62,7 @@ router.post('/', function(req, res, next) {
 });
 
 router.get('/:roomId/', function(req, res, next) {
-  console.log('On router /:roomId/'.blue); 
+  console.log('On router /:roomId/'.blue);
   var roomId = req.params.roomId;
   if (!(roomId in express.rooms)) {
     res.status(404);
@@ -85,7 +85,7 @@ router.get('/:roomId/', function(req, res, next) {
 });
 
 router.get('/test/test',function(req,res) {
-  console.log('On router /test/test/'.blue);  
+  console.log('On router /test/test/'.blue);
   res.render('test', {title: 'Test file'});
 });
 

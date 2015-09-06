@@ -15,7 +15,7 @@ $(function () {
 			throw "Invalid card: " + suit + rank;
 		return this;
 	};
-	
+
 	Card.prototype = {
 		toString: function() {
 			return this.suit + this.rank;
@@ -89,7 +89,7 @@ $(function () {
 			} else $('#player-'+(i+1)).hide();
 
 		}
-		
+
 		$('#poker-table').show();
 	});
 
@@ -102,24 +102,9 @@ $(function () {
 	});
 
 	socket.on('outcome', function(data){
-		/* data = [
-
-		 * {
-		 *  pOrder: 1
-		 *  nick: kkk
-		 *  msg:
-		 *  status:
-		 * },
-		 {
-		 *  pOrder: 2
-		 *  nick: lll
-		 *  msg:
-		 *  status:
-		 * }
-		 * ]
-		 */
 		console.log('outcome', data);
-		$('#playerList-' + data.pOlder).text(data.pOlder + '. ' + data.nick);
+		// $('#playerList-' + data.pOlder).text(data.pOlder + '. ' + data.nick);
+		outcome(data);
 	});
 
 	socket.on('hitOrStand', function(data){

@@ -7,6 +7,7 @@ function Room() {
   this.RANKS = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k"];
   this.VALUES = {a:1, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "t":10, "j":10, "q":10, "k":10};
   this.id = 'nchuit';
+  this.nextPlayer = null;
   this.init();
 }
 
@@ -27,15 +28,8 @@ Room.prototype.start = function() {
   for(i=0; i<2; i++)
     for(j in this.players)
       this.players[j].addCard( this.deck.dealCard() );
-  this.outcome("<strong>Hit</strong> or <strong>stand</strong>?");
-  // if(in_play) {
-  //   score -= 1;
-  //   outcome("<strong>Player</strong> lose. <strong>Hit</strong> or <strong>stand</strong>?", "success");
-  // } else {
-  //   in_play = true;
-  //   outcome("<strong>Hit</strong> or <strong>stand</strong>?");
-  // }
   this.draw();
+  this.askHitOrStand();
 };
 
 Room.prototype.outcome = function(msg, color) {
@@ -53,7 +47,7 @@ Room.prototype.addPlayer = function(obj) {
   console.log(socketId, 'join at room ID= "',this.id, '" as players');
   player.room = this;
   this.players[socketId] = player;
-  this.pOrder.push(socketId); 
+  this.pOrder.push(socketId);
   this.outcome(player.nick + ' join to room');
   if (this.pOrder.indexOf(socketId) == 0) {
     player.drawStartBtn();
@@ -64,7 +58,7 @@ Room.prototype.addPlayer = function(obj) {
 Room.prototype.removePlayer = function(socket) {
   console.log(socket.id, 'remove at room ID= "',this.id, '" as players');
   /*
-  var tmp = []; 
+  var tmp = [];
   tmp[0] += delete this.players[socket.id];
   tmp[1] += delete this.pOrder[this.pOrder.indexOf(socket.id)];
   */
@@ -72,7 +66,7 @@ Room.prototype.removePlayer = function(socket) {
   var index = this.pOrder.indexOf(socket.id);
   if (index != -1) {
     this.pOrder.splice(index,1);
-    this.outcome(socket.id, 'remove as players');
+    this.outcome(socket.id + ' 離開遊戲。');
   }
   var firstPlayer = this.players[this.pOrder[0]];
   if (firstPlayer)
@@ -154,6 +148,23 @@ Room.prototype.drawWait = function() {
   }
 };
 
+Room.prototype.askHitOrStand = function() {
+  this.nextPlayer = null;
+  for( var i in this.pOrder ) {
+    i = this.pOrder[i];
+    if( this.players[i].isStand )
+      continue;
+    this.nextPlayer = this.players[i];
+  }
+  if( this.nextPlayer != null ) {
+    // some players need to ask hit or stand
+    this.outcome('現在輪到 <strong>' + this.nextPlayer.nick + '</strong> 決定要不要抽牌。');
+    this.nextPlayer.askHitOrStand();
+  } else {
+    // all players stand
+  }
+};
+
 // Card
 function Card(room, suit, rank) {
   if( room.SUITS.indexOf(suit) == -1 || room.RANKS.indexOf(rank) == -1 )
@@ -203,37 +214,27 @@ function Person(socket) {
   this.room = null;
   this.cards = [];
   this.socket = socket;
+  this.isStand = false;
 }
 Person.prototype = {
+  askHitOrStand: function() {
+    this.socket.emit('askHitOrStand');
+  },
   hit: function() {
-    if(this.room.in_play) {
-      if(this.getValue() <= 21)
-        this.addCard(this.room.deck.dealCard());
-      if(this.getValue() > 21)
-        this.room.outcome("<strong>" + this.nick + "</strong> have busted", "warning");
-      this.room.draw();
-    } else {
-      this.outcome("Click <strong>Restart</strong> button to restart.");
+    if(this.socket.id != this.room.nextPlayer.socket.id) {
+      this.outcome("It's not your turn!", "danger");
+      return;
     }
+    if(this.getValue() <= 21)
+      this.addCard(this.room.deck.dealCard());
+    if(this.getValue() > 21)
+      this.outcome("<strong>" + this.nick + "</strong> 已經超過 21 點了，請按 Stand 來結束您的回合。", "warning");
+    this.room.draw();
   },
   stand: function() {
-    // if(!this.room.in_play) {
-    //   this.outcome("Click <strong>Deal</strong> button to restart.");
-    //   return;
-    // }
-    // if(player.getValue() <= 21)
-    //   while(dealer.getValue() < 17 || dealer.getValue() < Math.min(player.getValue(), 21))
-    //     dealer.addCard(deck.dealCard());
-    // in_play = false;
-    // player_win = ( player.getValue() <= 21 && dealer.getValue() < player.getValue() || dealer.getValue() > 21 );
-    // if(player_win) {
-    //   score += 1;
-    //   outcome('<strong>Player</strong> wins.', 'success');
-    // } else {
-    //   score -= 1;
-    //   outcome('<strong>Dealer</strong> wins.', 'danger');
-    // }
-    // this.room.draw();
+    this.isStand = true;
+    this.room.draw();
+    this.room.askHitOrStand();
   },
   outcome: function(msg, color) {
     this.socket.emit('outcome', {
