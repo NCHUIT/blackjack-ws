@@ -14,7 +14,6 @@ io.on('connection', function(socket) {
     if( !roomId in rooms )
       throw "room not exists";
     var room = rooms[roomId];
-    var person = room.addObserver(socket);
   } catch (e) {
     socket.emit('outcome', {
       color: 'danger',
@@ -22,11 +21,20 @@ io.on('connection', function(socket) {
     });
   }
 
-  socket.on('gameJoin', function(data) {
-    console.log(socket.id, 'join room ID="', room.id, '"');
-    room.removeObserver(socket);
+  socket.on('joinObserver', function(data){
+    var person = room.addObserver(socket);
+    room.drawWait();
+  });
+
+  socket.on('joinPlayer', function(data) {
+    console.log(socket.id, 'join room ID="' + room.id + '"');
+    if (room.players[socket.id]) {
+      console.log('The player.socket.id ="'+socket.id+'" is already in player');
+      console.log('I happend proccess this error just return');
+      return;
+    }
+    var person = room.addPlayer(socket);
     person.nick = data.nick || person.nick;
-    room.addPlayer(person);
     room.drawWait();
   });
 
@@ -55,6 +63,7 @@ io.on('connection', function(socket) {
       return;
     room.removePlayer(socket);
     room.removeObserver(socket);
+    room.drawWait();
   });
 });
 

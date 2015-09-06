@@ -103,7 +103,6 @@ $(function () {
 
 	socket.on('outcome', function(data){
 		console.log('outcome', data);
-		// $('#playerList-' + data.pOlder).text(data.pOlder + '. ' + data.nick);
 		outcome(data);
 	});
 
@@ -114,7 +113,6 @@ $(function () {
 
 		$.each(data, function(i, nick){
 			$('#playerList-' + (i+1)).text((i+1) + '. ' + data[i].nick);
-			console.log('#playerList-' + (i+1),(i+1) + '. ' + data[i].nick);
 		});
 		$('#roomId').show();
 	});
@@ -168,7 +166,7 @@ $(function () {
 
   $('#btn-submit').click(function() {
     var nick = $('#nick input').val();
-    socket.emit('gameJoin', {nick:nick});
+    socket.emit('joinPlayer', {nick:nick});
     $('form input').prop( "disabled", true );
     $('#btn-submit').attr('disabled','disabled');
     return false;

@@ -42,9 +42,9 @@ Room.prototype.outcome = function(msg, color) {
 Room.prototype.addPlayer = function(obj) {
   if(this.players.length >= 4)
     throw "[Room.addPlayer] exceed 4 players";
-  var player = obj instanceof Person ? obj : new Person(socket);
+  var player = obj instanceof Person ? obj : new Person(obj);
   var socketId = player.socket.id;
-  console.log(socketId, 'join at room ID= "',this.id, '" as players');
+  console.log(socketId + 'join at room ID= "'+this.id+ '" as players');
   player.room = this;
   this.players[socketId] = player;
   this.pOrder.push(socketId);
@@ -56,7 +56,7 @@ Room.prototype.addPlayer = function(obj) {
 }
 
 Room.prototype.removePlayer = function(socket) {
-  console.log(socket.id, 'remove at room ID= "',this.id, '" as players');
+  console.log(socket.id+ 'remove at room ID= "'+this.id+ '" as players');
   /*
   var tmp = [];
   tmp[0] += delete this.players[socket.id];
@@ -69,7 +69,7 @@ Room.prototype.removePlayer = function(socket) {
     this.outcome(socket.id + ' 離開遊戲。');
   }
   var firstPlayer = this.players[this.pOrder[0]];
-  if (firstPlayer)
+  if (typeof firstPlayer !== "undefined")
     firstPlayer.drawStartBtn();
 }
 
