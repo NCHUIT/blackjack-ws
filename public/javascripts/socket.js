@@ -135,12 +135,19 @@ $(function () {
 		$('#poker-stand').removeAttr('disabled','disabled');
 	});
 
+	socket.on('drawResult', function(data) {
+		console.log('drawResult');
+		$('#winner').text(data + 'win!!');
+	});
+
 	socket.on('win', function() {
 		console.log('win');
+		$('#result').text('You win!');
 	});
 
 	socket.on('lose', function() {
 		console.log('lose');
+		$('#result').text('You lose!');
 	});
 
 	function view_hide(){
