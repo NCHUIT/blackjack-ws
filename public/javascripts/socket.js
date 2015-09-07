@@ -195,7 +195,8 @@ $(function () {
 
   $('#poker-stand').click(function(){
   	socket.emit('stand');
-  	$('#poker-hit', '#poker-stand').attr('disabled','disabled');
+  	$('#poker-hit').attr('disabled','disabled');
+  	$('#poker-stand').attr('disabled','disabled');
   	console.log('stand');
   });
   $('#poker-hit').attr('disabled','disabled');
