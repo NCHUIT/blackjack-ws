@@ -131,7 +131,8 @@ $(function () {
 	socket.on('askHitOrStand', function(){
 		// ask player hit or stand
 		console.log('askHitOrStand');
-		$('#poker-hit', '#poker-stand').removeAttr('disabled','disabled');
+		$('#poker-hit').removeAttr('disabled','disabled');
+		$('#poker-stand').removeAttr('disabled','disabled');
 	});
 
 	socket.on('win', function() {
