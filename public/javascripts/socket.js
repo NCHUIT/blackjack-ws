@@ -130,6 +130,7 @@ $(function () {
 	socket.on('askHitOrStand', function(){
 		// ask player hit or stand
 		console.log('askHitOrStand');
+		$('#poker-hit', '#poker-stand').removeAttr('disabled','disabled');
 	});
 
 	socket.on('win', function() {
@@ -192,6 +193,9 @@ $(function () {
 
   $('#poker-stand').click(function(){
   	socket.emit('stand');
+  	$('#poker-hit', '#poker-stand').attr('disabled','disabled');
   	console.log('stand');
   });
+  $('#poker-hit').attr('disabled','disabled');
+  $('#poker-stand').attr('disabled','disabled');
 });
