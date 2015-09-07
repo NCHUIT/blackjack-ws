@@ -1,15 +1,7 @@
 // https://987.tw/2014/03/08/export-this-node-jsmo-zu-de-jie-mian-she-ji-mo-shi/
 
 var express = require('express');
-
-function clone(obj) {
-    if (null == obj || "object" != typeof obj) return obj;
-    var copy = obj.constructor();
-    for (var attr in obj) {
-        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-    }
-    return copy;
-}
+var _ = require('underscore');
 
 function Room() {
   this.SUITS = ["c", "s", "h", "d"];
@@ -113,14 +105,15 @@ Room.prototype.drawObserver = function() {
     if(pid != null) {
       var player = this.players[pid];
       var tmp = {
-        nick: player.nick,
-        cards: player.cards,
-        outcome: player.outcome,
+        nick: _.clone(player.nick),
+        cards: _.clone(player.cards),
+        outcome: _.clone(player.outcome),
       }
-      // This line in order to prevent tmp reference to player's data 
-      data = clone(data);
-      for(var i in data.cards)
+      /*
+      for(var i in tmp.cards)
         tmp.cards[i] = tmp.cards[i].toString();
+      */
+      tmp.cards[0] = 'xx';
     }
     data.players.push(tmp);
   }
@@ -298,14 +291,15 @@ Person.prototype = {
   },
   drawPlayer: function(steal) {
     var data = {
-      nick: this.nick,
-      cards: this.cards,
-      outcome: this.outcome,
+      nick: _.clone(this.nick),
+      cards: _.clone(this.cards),
+      outcome: _.clone(this.outcome),
     };
-    data = clone(data);
     //data = JSON.parse(JSON.stringify(data));
+    /*
     for(var i in data.cards)
       data.cards[i] = data.cards[i].toString();
+    */
     this.socket.emit('drawPlayer', data);
     return this;
   },

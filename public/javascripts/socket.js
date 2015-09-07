@@ -8,10 +8,14 @@ $(function () {
 	var RANKS = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k"];
 	var VALUES = {a:1, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "t":10, "j":10, "q":10, "k":10};
 
-	function Card(str) {
-		this.suit = str[0];
-		this.rank = str[1];
-		if( SUITS.indexOf(str[0]) == -1 && RANKS.indexOf(str[1]) == -1 && str != 'xx' )
+	function Card(card) {
+		this.suit = card.suit;
+		this.rank = card.rank;
+		if (typeof card === 'string') {
+			this.suit = card[0];
+			this.rank = card[1];
+		}
+		if( SUITS.indexOf(this.suit) == -1 && RANKS.indexOf(this.rank) == -1 && card != 'xx' )
 			throw "Invalid card: " + this.suit + this.rank;
 		return this;
 	};
