@@ -30,7 +30,6 @@ Room.prototype.start = function() {
     for(j in this.players)
       this.players[j].addCard( this.deck.dealCard() );
   this.draw();
-  this.askHitOrStand();
 };
 
 Room.prototype.outcome = function(msg, color) {
@@ -92,6 +91,7 @@ Room.prototype.draw = function() {
     this.players[i].drawPlayer();
   }
   this.drawObserver();
+  this.askHitOrStand();
 };
 
 Room.prototype.drawObserver = function() {
@@ -183,11 +183,20 @@ Room.prototype.end = function() {
     }
   }
   for(var player in this.players) {
-    if(player.id in winner)
+    player = this.players[player];
+    if(winner.indexOf(player.socket.id) != -1)
       player.drawWin();
     else player.drawLose();
   }
+  this.drawObResult(winner);
 };
+
+Room.prototype.drawObResult = function(winner) {
+  for (var ob in this.observers) {
+    ob = this.observers[ob];
+    ob.socket.emit('drawResult', winner);
+  }
+}
 // Card
 function Card(room, suit, rank) {
   if( room.SUITS.indexOf(suit) == -1 || room.RANKS.indexOf(rank) == -1 )
@@ -257,7 +266,6 @@ Person.prototype = {
   stand: function() {
     this.isStand = true;
     this.room.draw();
-    this.room.askHitOrStand();
   },
   outcome: function(msg, color) {
     this.socket.emit('outcome', {

@@ -139,21 +139,21 @@ $(function () {
 		view_hide();
 		console.log('drawResult');
 		$('#winner').text(data + 'win!!');
-		$('#result').show;
+		$('#result').show();
 	});
 
 	socket.on('win', function() {
 		view_hide();
 		console.log('win');
 		$('#result').text('You win!');
-		$('#result').show;
+		$('#result').show();
 	});
 
 	socket.on('lose', function() {
 		view_hide();
 		console.log('lose');
 		$('#result').text('You lose!');
-		$('#result').show;
+		$('#result').show();
 	});
 
 	function view_hide(){
