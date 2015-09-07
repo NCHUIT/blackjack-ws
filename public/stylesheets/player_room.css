@@ -94,3 +94,7 @@
 #btn-start {
 	display: none;
 }
+#player-nick h3{
+	display: none;
+	text-align: center;
+}

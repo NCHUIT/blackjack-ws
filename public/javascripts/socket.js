@@ -124,6 +124,7 @@ $(function () {
 	socket.on('drawStartBtn', function(data) {
 	    console.log('drawStartBtn', data);
 	    $('#btn-submit').hide();
+	    $('#waitingMsg').hide();
 	    $('#btn-start').show();
 	});
 
@@ -174,6 +175,7 @@ $(function () {
     socket.emit('joinPlayer', {nick:nick});
     $('form input').prop( "disabled", true );
     $('#btn-submit').attr('disabled','disabled');
+    $('#waitingMsg').show();
     return false;
   })
   $('#btn-start').click(function() {
