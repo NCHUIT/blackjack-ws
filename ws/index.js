@@ -44,11 +44,13 @@ io.on('connection', function(socket) {
   });
 
   socket.on('hit', function(data){
+    var person = room.players[socket.id];
     console.log(socket.id, 'hit');
     person.hit();
   });
 
   socket.on('stand', function(data){
+    var person = room.players[socket.id];
     console.log(socket.id, 'stand');
     person.stand();
   });

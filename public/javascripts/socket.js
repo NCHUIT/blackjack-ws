@@ -12,7 +12,7 @@ $(function () {
 		this.suit = str[0];
 		this.rank = str[1];
 		if( SUITS.indexOf(str[0]) == -1 && RANKS.indexOf(str[1]) == -1 && str != 'xx' )
-			throw "Invalid card: " + suit + rank;
+			throw "Invalid card: " + this.suit + this.rank;
 		return this;
 	};
 
