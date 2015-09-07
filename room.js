@@ -2,6 +2,15 @@
 
 var express = require('express');
 
+function clone(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+}
+
 function Room() {
   this.SUITS = ["c", "s", "h", "d"];
   this.RANKS = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k"];
@@ -108,7 +117,10 @@ Room.prototype.drawObserver = function() {
         cards: player.cards,
         outcome: player.outcome,
       }
-      tmp.cards[0] = 'xx';
+      // This line in order to prevent tmp reference to player's data 
+      data = clone(data);
+      for(var i in data.cards)
+        tmp.cards[i] = tmp.cards[i].toString();
     }
     data.players.push(tmp);
   }
@@ -155,6 +167,7 @@ Room.prototype.askHitOrStand = function() {
     if( this.players[i].isStand )
       continue;
     this.nextPlayer = this.players[i];
+    break;
   }
   if( this.nextPlayer != null ) {
     // some players need to ask hit or stand
@@ -182,7 +195,6 @@ Room.prototype.end = function() {
     else player.drawLose();
   }
 };
-
 // Card
 function Card(room, suit, rank) {
   if( room.SUITS.indexOf(suit) == -1 || room.RANKS.indexOf(rank) == -1 )
@@ -273,7 +285,7 @@ Person.prototype = {
         isFirst = false;
         continue;
       }
-      card = this.cards[i];
+      var card = this.cards[i];
       if( card.getRank() == 'a' )
         hasAce = true;
       value += VALUES[card.getRank()];
@@ -290,6 +302,8 @@ Person.prototype = {
       cards: this.cards,
       outcome: this.outcome,
     };
+    data = clone(data);
+    //data = JSON.parse(JSON.stringify(data));
     for(var i in data.cards)
       data.cards[i] = data.cards[i].toString();
     this.socket.emit('drawPlayer', data);
