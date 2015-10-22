@@ -2,6 +2,10 @@
 
 這是一個用來練習 WebSocket 的多人 Blackjack 遊戲。
 
+![img](public/img/bj-1.png)
+
+![img](public/img/bs-5.png)
+
 ## 構想
 
 主畫面 (投影機 or 螢幕) 顯示開啟新遊戲，點選開啟新遊戲後，網頁上顯示代碼及 QR code，以便手機加入遊戲 (使用手機 chrome 瀏覽器)。當人數足夠時，在主畫面按開始來開始遊戲 (至少兩人)。
@@ -22,3 +26,38 @@
 ## 素材
 
 牌面：<http://imgur.com/HqjFI5e>
+
+### Install 
+
+```
+$ git clone git@github.com:NCHUIT/blackjack-ws.git
+
+$ git checkout develop
+
+$ npm install
+
+```
+
+### Usage
+
+```
+
+$ npm start
+
+```
+
+首先先開啟一個 Observer(PC) 按下 Start Button
+
+然後再用一至多個裝置掃Qr code 進入遊玩
+
+> 注意 本系統戰暫時以URL尾加上 Query String `m` 代表為手持裝置的判斷
+
+**HAVE FUN ~ !**
+
+### Contributor
+
+- [taichunmin](http://taichunmin.idv.tw/)
+
+- [杜杰](http://nyannyan.space/)
+
+- [Lego](http://qas612820704.github.io/)
